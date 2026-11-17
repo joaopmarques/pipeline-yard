@@ -123,6 +123,10 @@ record: it holds the data of a real repository.
   every item.
 - The setup skill and the lever skills are new. Expect to adjust them after the first runs.
 
+## License
+
+Pipeline Yard is under the MIT License. See `LICENSE`.
+
 ## Third-party code
 
 `skills/board/vendor/anatomy/iso-kit.mjs` is the isometric drawing kit from the `anatomy` skill,

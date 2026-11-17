@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+# A record of command results holds the data of a real repository.
+*fixture*.json
+/tmp/

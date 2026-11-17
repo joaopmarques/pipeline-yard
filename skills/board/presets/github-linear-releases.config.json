@@ -1,0 +1,149 @@
+{
+  "preset": "github-linear-releases",
+  "team": "ABC",
+  "artifactUrl": null,
+  "release": {
+    "branch": "main",
+    "mode": "tags",
+    "production": "^v?\\d+\\.\\d+\\.\\d+$",
+    "staging": "^v?\\d+\\.\\d+\\.\\d+-"
+  },
+  "labels": {
+    "risk": null,
+    "agentReview": null,
+    "blockers": null,
+    "stale": null
+  },
+  "project": {
+    "tracker": "linear",
+    "gates": ["npm test"],
+    "rules": [],
+    "decisions": null,
+    "reviewSkill": null,
+    "rerunReview": null,
+    "lowRiskLabels": [],
+    "chat": null,
+    "releaseDocs": [],
+    "stagingCommand": "gh release create {version}-rc --target {sha} --generate-notes --prerelease",
+    "productionCommand": "gh release create {version} --target {sha} --generate-notes --latest"
+  },
+  "inboxStatuses": ["Todo", "In Progress"],
+  "startedStatus": "In Progress",
+  "qaStatuses": ["Done"],
+  "qaTarget": "Done",
+  "doneStatus": "Done",
+  "staleReviewDays": 2,
+  "inboxLimit": 6,
+  "redMax": 3,
+  "lines": [
+    {
+      "key": "inbox",
+      "kind": "tickets",
+      "color": "#9aa6bd",
+      "name": "INBOX",
+      "hint": "ticket, no session yet",
+      "panel": {
+        "name": "Inbox",
+        "hint": "Tickets with no session yet. A flat wagon is a ticket nobody started.",
+        "empty": "No open tickets without a session."
+      },
+      "lever": {
+        "label": "START",
+        "name": "Start the urgent tickets",
+        "nameFallback": "Start the next tickets",
+        "skill": "board-start-tickets",
+        "prompt": "{skill} Start work on {n|this ticket|these tickets}: {list}. Group them by area. Commit on each branch. Do not push and do not open a pull request. Report, then ask me."
+      }
+    },
+    {
+      "key": "building",
+      "kind": "work",
+      "color": "#4f9cff",
+      "name": "BUILDING",
+      "hint": "a session is on it",
+      "panel": {
+        "name": "Building",
+        "hint": "A session is on it. Steam means it is working now.",
+        "empty": "No work in progress."
+      },
+      "lever": {
+        "label": "REVIEW",
+        "name": "Review what is ready",
+        "skill": "board-self-review",
+        "prompt": "{skill} Review {n|this branch|these branches} with fresh eyes, one at a time: {list}. Give a verdict for each. Do not change code."
+      }
+    },
+    {
+      "key": "yourMove",
+      "kind": "work",
+      "color": "#f472b6",
+      "name": "YOUR MOVE",
+      "hint": "fix it or merge it",
+      "panel": {
+        "name": "Your move",
+        "hint": "Fix it or merge it.",
+        "empty": "No PR needs a fix or a merge."
+      },
+      "lever": {
+        "label": "FIX",
+        "name": "Fix the blockers",
+        "skill": "board-fix-blockers",
+        "prompt": "{skill} Fix the review blockers on {n|this pull request|these pull requests}, one at a time, in this order: {list}. Commit on each pull request branch. Do not push. Report, then ask me which to push."
+      }
+    },
+    {
+      "key": "waiting",
+      "kind": "work",
+      "color": "#a78bfa",
+      "name": "REVIEWERS",
+      "hint": "needs a human",
+      "panel": {
+        "name": "Reviewers",
+        "hint": "Open PRs that need a human.",
+        "empty": "No PR is waiting for review."
+      },
+      "lever": {
+        "label": "CHASE",
+        "name": "Chase the reviews",
+        "skill": "board-chase-reviews",
+        "prompt": "{skill} Find the right reviewer for {n|this pull request|these pull requests}: {list}. Draft the requests. Do not send anything until I agree."
+      }
+    },
+    {
+      "key": "release",
+      "kind": "release",
+      "color": "#2dd4bf",
+      "name": "RELEASE",
+      "hint": "merged, not live",
+      "panel": {
+        "name": "Release road {release}",
+        "hint": "Merged, not in Production. Staging is {staging}.",
+        "empty": "Production has every merged change."
+      },
+      "lever": {
+        "label": "SHIP",
+        "name": "Cut the release",
+        "skill": "board-cut-release",
+        "prompt": "{skill} {count} merged {n|change is|changes are} not in Production. Production is {production}. Staging is {staging}. Prepare the next release. Ask me before each deploy."
+      }
+    },
+    {
+      "key": "live",
+      "kind": "arrivals",
+      "color": "#b5e048",
+      "name": "ARRIVED",
+      "hint": "live, close the ticket",
+      "panel": {
+        "name": "Arrived in {liveIn}",
+        "hint": "Live. Post the evidence, then close the ticket.",
+        "empty": "{closedOut} closed out. Nothing to do."
+      },
+      "lever": {
+        "label": "CLOSE",
+        "name": "Close out the release",
+        "skill": "board-close-out",
+        "prompt": "{skill} {n|This change is|These changes are} live in {liveIn}: {list}. Draft the evidence comments. Do not post a comment or move a ticket until I agree."
+      }
+    }
+  ]
+}
